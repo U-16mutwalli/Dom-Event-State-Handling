@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>quiz</title>
+    <style>
+        body{
+            background-color: rgb(168, 231, 231);
+        }
+        .question {
+            font-size: 20px;
+            margin-bottom: 20px;
+          }
+          button{
+            margin: 10px;
+            font-size: larger;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Simple Quiz</h2>
+        <div id="quiz"></div>
+        <button onclick="submitQuiz()">Submit</button>
+        <div id="result"></div>
+    </div>
+    <script>
+        const quizData = [
+            {
+                question: "What is the capital of France?",
+                options: ["Paris", "London", "Berlin", "Madrid"],
+                answer: "Paris"
+            },
+            {
+                question: "What is the capital of Germany?",
+                options: ["Paris", "London", "Berlin", "Madrid"],
+                answer: "Berlin"
+            },
+            {
+                question: "What is the capital of Italy?",
+                options: ["Paris", "London", "Berlin", "Rome"],
+                answer: "Rome"
+            }
+        ];
+
+        const quizContainer = document.getElementById("quiz");
+        const resultContainer = document.getElementById("result");
+
+        quizData.forEach((q, index) => {
+            const div = document.createElement("div");
+            div.classList.add("question");
+            div.innerHTML = `<p>${index + 1}. ${q.question}</p>`;
+            q.options.forEach(option => {
+                div.innerHTML += `
+                    <label>
+                        <input type="radio" name="question${index}" value="${option}"> ${option}
+                    </label><br>`;
+            });
+            quizContainer.appendChild(div);
+        });
+
+        function submitQuiz() {
+            let score = 0;
+            quizData.forEach((q, index) => {
+                const radio = document.querySelector(`input[name="question${index}"]:checked`);
+                if (radio && radio.value === q.answer) {
+                    score++;
+                }
+            });
+            resultContainer.innerHTML = `Your score is ${score} out of ${quizData.length}`;
+        }
+    </script>
+</body>
+</html>
